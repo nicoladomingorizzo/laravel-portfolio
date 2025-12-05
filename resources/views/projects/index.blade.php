@@ -3,6 +3,11 @@
 @section('title', 'Tutti i progetti')
 
 @section('content')
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-outline-info btn-lg text-centered me-2 px-4 py-2 mb-5 mt-2"
+            href="{{ route('projects.create') }}">Aggiungi
+            un post</a>
+    </div>
 
     {{-- <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-lg-4 align-items-stretch">
         @foreach ($projects as $project)
