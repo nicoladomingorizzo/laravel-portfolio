@@ -17,8 +17,12 @@
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">
-            <label for="tools">Tools usati nel progetto</label>
-            <input type="text" name="tools" id="tools">
+            <label for="type_id">Tipologia di progetto</label>
+            <select name="type_id" id="type_id">
+                @foreach ($types as $type)
+                    <option value={{ $type->id }}>{{ $type->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <input class="btn btn-lg btn-light text-center my-3" type="submit" value="Salva il progetto">

@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\TypeController as AdminTypeController;  // 👈 Importazione del NUOVO Controller
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,14 +21,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])
-    ->name('admin')
+    ->name('admin.')
     ->prefix('admin')
     ->group(function () {
         Route::get('/index', [DashboardController::class, 'index'])
             ->name('index');
-    });
 
-Route::resource('projects', AdminProjectController::class)
-    ->middleware('auth', 'verified');
+        Route::resource('projects', AdminProjectController::class);
+
+        Route::resource('types', AdminTypeController::class);
+    });
 
 require __DIR__ . '/auth.php';

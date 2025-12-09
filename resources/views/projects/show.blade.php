@@ -15,7 +15,7 @@
         {{ $project->content }}
     </p>
 
-    <p class="fs-4 text-muted mx-auto text-center">{{ $project->tools }}</p>
+    <p class="fs-4 text-muted mx-auto text-center"></b>Tipologia di progetto:</b> {{ $project->type->name }}</p>
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

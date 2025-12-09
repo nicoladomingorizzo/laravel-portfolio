@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -22,7 +23,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        // prendo tutti i types
+        $types = Type::all();
+        return view('projects.create', compact('types'));
     }
 
     /**
@@ -38,7 +41,7 @@ class ProjectController extends Controller
         // Collego gli attributi ai rispettivi dati
         $newProject->title = $data['title'];
         $newProject->content = $data['content'];
-        $newProject->tools = $data['tools'];
+        $newProject->type_id = $data['type_id'];
         // Li salvo nel database
         $newProject->save();
 
@@ -66,7 +69,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         // cambiando nella funzione il modello e il nome del modello in piccolo [ex (Project $project)] cambia tutto in automatico senza dover usare metodi, qualora tutto combaciasse
-        return view('projects.edit', compact('project'));
+        $types = Type::all();
+        return view('projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -79,7 +83,7 @@ class ProjectController extends Controller
         // Modifico le informazioni del progetto
         $project->title = $data['title'];
         $project->content = $data['content'];
-        $project->tools = $data['tools'];
+        $project->type_id = $data['type_id'];
         // Aggiorno i dati nel database
         $project->update();
 
