@@ -22,6 +22,8 @@ class TypesTableSeeder extends Seeder
 
             $newType->name = $type;
             $newType->description = $faker->sentence();
+
+            $newType->save();
         }
     }
 }
