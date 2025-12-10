@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Tag;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,8 @@ class ProjectController extends Controller
     {
         // prendo tutti i types
         $types = Type::all();
-        return view('projects.create', compact('types'));
+        $tags = Tag::all();
+        return view('projects.create', compact('types', 'tags'));
     }
 
     /**
@@ -45,6 +47,11 @@ class ProjectController extends Controller
         // Li salvo nel database
         $newProject->save();
 
+        // Attacco i tag
+        if ($request->has('tags')) {
+            $newProject->tags()->attach($data['tags']);
+        }
+
         // Faccio tornare alla vista show
         return redirect()->route('projects.show', $newProject);
     }
@@ -60,6 +67,9 @@ class ProjectController extends Controller
         // con metodo find
         // $project = Project::find($id);
         // alla fine cambiando nella funzione il modello e il nome del modello in piccolo [ex (Project $project)] cambia tutto in automatico senza dover usare metodi, qualora tutto combaciasse
+
+        $project->load('tags');
+
         return view('projects.show', compact('project'));
     }
 
@@ -69,8 +79,12 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         // cambiando nella funzione il modello e il nome del modello in piccolo [ex (Project $project)] cambia tutto in automatico senza dover usare metodi, qualora tutto combaciasse
+
+        // Questo garantisce che $project->tags sia una Collection (anche se vuota) e non null.
+        $project->load('tags');
         $types = Type::all();
-        return view('projects.edit', compact('project', 'types'));
+        $tags = Tag::all();
+        return view('projects.edit', compact('project', 'types', 'tags'));
     }
 
     /**
@@ -87,8 +101,15 @@ class ProjectController extends Controller
         // Aggiorno i dati nel database
         $project->update();
 
+        // Sincronizzo i tag che cambiano
+        if ($request->has('tags')) {
+            $project->tags()->sync($data['tags']);
+        } else {
+            $project->tags()->detach();
+        }
+
         // Faccio tornare alla vista show
-        return redirect()->route('projects.show', $project);
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**

@@ -11,12 +11,28 @@
         </button>
     </div>
 
-    <p class="fs-3 w-75 mx-auto text-center my-5">
-        {{ $project->content }}
-    </p>
+    <div class="mb-4 d-flex flex-column">
 
-    <p class="fs-4 text-muted mx-auto text-center"></b>Tipologia di progetto:</b> {{ $project->type->name }}</p>
+        <p class="fs-3 w-75 mx-auto text-center my-5">
+            {{ $project->content }}
+        </p>
 
+        <p class="fs-4 text-muted mx-auto text-center"></b>Tipologia di progetto:</b> {{ $project->type->name }}</p>
+
+        <div class="text-center d-flex flex-column mx-auto fs-4">
+            @if ($project->tags->isNotEmpty())
+                <p class="text-center mt-5"><b class="fs-5">Tecnologie utilizzate</b>
+                </p>
+                <div>
+
+                    @foreach ($project->tags as $tag)
+                        <span class="badge mt-0" style='background-color: {{ $tag->color }}'>{{ $tag->name }}</span>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
+    </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

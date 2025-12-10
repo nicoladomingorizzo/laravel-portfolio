@@ -25,6 +25,15 @@
             </select>
         </div>
 
+        <div class="form-control mb-3 d-flex flex-wrap">
+            @foreach ($tags as $tag)
+                <div class="tag mx-2 my-1">
+                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag-{{ $tag->id }}">
+                    <label for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                </div>
+            @endforeach
+        </div>
+
         <input class="btn btn-lg btn-light text-center my-3" type="submit" value="Salva il progetto">
     </form>
 @endsection
