@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="d-flex justify-content-center py-4">
-        <a class="btn btn-outline-warning btn-lg mx-5" href="{{ route('projects.edit', $project) }}">Modifica</a>
+        <a class="btn btn-outline-warning btn-lg mx-5" href="{{ route('admin.projects.edit', $project) }}">Modifica</a>
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Elimina
         </button>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-warning btn-lg" data-bs-dismiss="modal">Annulla</button>
-                    <form action="{{ route('projects.destroy', $project) }}" method="POST">
+                    <form action="{{ route('admin.projects.destroy', $project) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <input class="btn btn-outline-danger btn-lg" value="Elimina definitivamente" type="submit">
